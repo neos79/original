@@ -1,0 +1,61 @@
+
+delete duplicate entries in table
+DELETE FROM emp WHERE rowid not in(SELECT MIN(rowid) FROM emp GROUP BY  id,ename,job,comm);
+
+update emptemp set Job=(select job from emptemp where empno=1111) ||'soft' where empno=1111;
+
+RANK gives you the ranking within your ordered partition. Ties are assigned the same rank, 
+with the next ranking(s) skipped. So, if you have 3 items at rank 2, the next rank listed would be ranked 5.
+It assign non consecutive rank 
+
+
+select sal from( select sal,dense_rank() over (order by sal desc) ranking from emp)where ranking = 1;
+select sal from( select sal,rank() over (order by sal desc) ranking from emp)where ranking = 5;
+SELECT sal FROM (SELECT sal, row_number() OVER (order by sal desc) AS ranking FROM emp)WHERE ranking = 3;
+
+
+DENSE_RANK again gives you the ranking within your ordered partition, but the ranks are consecutive.
+No ranks are skipped if there are ranks with multiple items.It assign only consecutive rank. 
+ 
+ EMP     DEPTNO        SAL          R        DR1        DR2
+--- ---------- ---------- ---------- ---------- ----------
+xxx         10                     1          1          4
+rrr         10      10000          2          2          1
+fff         10      40000          3          3          2
+ddd         10      40000          3          3          2
+ccc         10      50000          5          4          3
+bbb         10      50000          5          4          3
+mmm         11       5000          1          1          1
+nnn         11      20000          2          2          2
+kkk         12      30000          1          1          1
+ 
+ ======================================================================
+ 
+CREATE TABLE t AS
+SELECT 'a' v FROM dual UNION ALL
+SELECT 'a'   FROM dual UNION ALL
+SELECT 'a'   FROM dual UNION ALL
+SELECT 'b'   FROM dual UNION ALL
+SELECT 'c'   FROM dual UNION ALL
+SELECT 'c'   FROM dual UNION ALL
+SELECT 'd'   FROM dual UNION ALL
+SELECT 'e'   FROM dual;
+
+SELECT
+  v,
+  ROW_NUMBER() OVER (ORDER BY v) row_number,
+  RANK()       OVER (ORDER BY v) rank,
+  DENSE_RANK() OVER (ORDER BY v) dense_rank
+FROM t
+ORDER BY v;
+ 
+ROW_NUMBER(): This one generates a new row number for every row, regardless of duplicates within a partition.
+RANK(): This one generates a new row number for every distinct row, leaving gaps between groups of duplicates within a partition.
+DENSE_RANK(): This one generates a new row number for every distinct row, leaving no gaps between groups of duplicates within a partition.
+ 
+ 
+ 
+ query to know the count of employee in each dept
+ select deptno,avg(sal),count(1) from emp group by deptno;
+ 
+  
