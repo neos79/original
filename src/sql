@@ -58,4 +58,50 @@ DENSE_RANK(): This one generates a new row number for every distinct row, leavin
  query to know the count of employee in each dept
  select deptno,avg(sal),count(1) from emp group by deptno;
  
+ 
+ 
+ 
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+SELECT
+  product_name,
+  list_price,
+  CASE
+    WHEN list_price > 0 AND list_price  < 600
+        THEN 'Mass'
+    WHEN list_price >= 600 AND list_price < 1000
+        THEN 'Economy'
+    WHEN list_price >= 1000 AND list_price < 2000
+        THEN 'Luxury'
+    ELSE 
+        'Grand Luxury'
+  END product_group
+FROM
+  products
+WHERE
+  category_id = 1
+ORDER BY
+  product_name;
   
+  
+  
+  UPDATE BUSINESS_PRODUCT SET payment_product = (CASE instr(payment_product,'PO01')
+        WHEN 0 THEN payment_product||'\nPO01'
+   ELSE payment_product END)
+where  BUSINESS_PRODUCT_CODE in ('SALBUS01','VENDBUS01');

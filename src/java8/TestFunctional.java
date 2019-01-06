@@ -6,7 +6,11 @@ import java.util.List;
 
 @FunctionalInterface
 interface R{
-	boolean show(int a);
+	boolean show(List<Integer> a);
+}
+@FunctionalInterface
+interface RR extends R{
+	boolean show(List s);
 }
 
 
