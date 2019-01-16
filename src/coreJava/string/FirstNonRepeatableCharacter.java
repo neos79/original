@@ -12,14 +12,16 @@ public class FirstNonRepeatableCharacter {
 		Set<Character> linkedHashSet=new LinkedHashSet<>();
 				for(int i=0;i<str.length();i++){
 						if(!linkedHashSet.contains(str.charAt(i))){
-							linkedHashSet.add(str.charAt(i));
+							if(!(i==str.length()-1)){
+								linkedHashSet.add(str.charAt(i));
+							}
 							continue;
 						}
 						if(linkedHashSet.contains(str.charAt(i))){
 							linkedHashSet.remove(str.charAt(i));
 							continue;
 						}
-					}	
+					}	System.out.println(linkedHashSet);
 			}
 
 }
