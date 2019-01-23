@@ -1,14 +1,18 @@
 package java8.streams;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.TooManyListenersException;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import java.util.stream.Collectors;
 public class MyInstream {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		System.out.println("printing 1-9");
 		IntStream.range(1, 10).forEach(System.out::print);
 		System.out.println("\n---------------");
@@ -48,8 +52,24 @@ public class MyInstream {
 			.average().ifPresent(System.out::print);
 		
 		
-		
-		
+		System.out.println("\n\n-----Stream from List, filter print----------");
+		List<String> people=Arrays.asList("Ab","Ra","mn","DK","RS");
+			people.stream().map(String::toUpperCase)
+			.filter(x->x.startsWith("R"))
+			.forEach(System.out::printf);
+			
+			
+		IntStream.rangeClosed(1, 10).forEach(num -> System.out.print(num)); // ->12345678910
+
+		IntStream.range(1, 10).forEach(num -> System.out.print(num)); // ->123456789
+			
+			
+		System.out.println("\n\n-----Stream row from text file sort filter print----------");	
+			Stream<String> bands=Files.lines(Paths.get("Band.txt"));
+				bands.sorted().filter(x->x.length()>10)
+				.forEach(System.out::printf);
+			bands.close();
 	}
 
 }
+
