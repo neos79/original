@@ -32,7 +32,13 @@ public class AB {
 		String[] a1=new String[list.size()];
 		//String[] a2=list.toArray(a1);
 		
+		double d=(1.0d*0.1d);
+		System.out.println(d==0.3);
 		
+		double d1=4*0.1;
+		System.out.println(d1==0.4);
+		
+		System.out.println("");
 		
 	}
 }

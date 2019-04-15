@@ -50,8 +50,10 @@ FROM t
 ORDER BY v;
  
 ROW_NUMBER(): This one generates a new row number for every row, regardless of duplicates within a partition.
-RANK(): This one generates a new row number for every distinct row, leaving gaps between groups of duplicates within a partition.
-DENSE_RANK(): This one generates a new row number for every distinct row, leaving no gaps between groups of duplicates within a partition.
+RANK(): This one generates a new row number for every distinct row, leaving gaps between groups of duplicates within a 
+partition.
+DENSE_RANK(): This one generates a new row number for every distinct row, leaving no gaps between groups of duplicates within 
+a partition.
  
  
  
