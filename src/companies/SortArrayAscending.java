@@ -1,4 +1,4 @@
-package companies.wipro;
+package companies;
 /**
  * @author naveen.singh
  *

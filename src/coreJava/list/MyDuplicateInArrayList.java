@@ -8,6 +8,9 @@ public class MyDuplicateInArrayList {
 		arr.add("A");
 		arr.add("V");
 		arr.add("R");
+		System.out.println(arr.contains("V"));
+		System.out.println(arr.contains("N"));
+		System.out.println(arr.indexOf("R"));
 		
 	}
 }

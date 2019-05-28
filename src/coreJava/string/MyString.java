@@ -21,7 +21,7 @@ public class MyString {
 		 String s5=new String("you cannot change me");
 		 System.out.println(s4==s5);
 		 String s6="you cannot"+" change me";//will be concatinated at compile time
-		 System.out.println(s3==s6);
+		 System.out.println("s3==s6"+(s3==s6));
 		 String s7="you cannot";
 		 String s8=s7+" change me";//bcz of one variable will be done 
 		 //at run time so object will created at compile time and thus on heap area
@@ -35,7 +35,7 @@ public class MyString {
 		 String s11=new String("Neo");
 		 String s12=s11.intern();//will get heap reference
 		 String s13="Neo";
-		 System.out.println(s12==s13);
+		 System.out.println("s12==s13"+(s12==s13));
 
 		// print duplicate Character from string
 		//duplicateCharacterInString("Naveenv".toLowerCase());

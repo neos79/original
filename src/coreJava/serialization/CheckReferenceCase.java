@@ -32,15 +32,10 @@ public class CheckReferenceCase {
 	}
 
 	public static void serialize(A object) {
-		FileOutputStream fileOutputStream;
-		ObjectOutputStream objectOutputStream = null;
-		try {
-			fileOutputStream = new FileOutputStream("D:\\serializedFile");
-			objectOutputStream = new ObjectOutputStream(fileOutputStream);
-			objectOutputStream.writeObject(object);
-			fileOutputStream.close();
-			objectOutputStream.close();
-
+		
+		try (FileOutputStream fileOutputStream= new FileOutputStream("D:\\serializedFile");
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);){
+			    objectOutputStream.writeObject(object);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

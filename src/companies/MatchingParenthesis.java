@@ -1,4 +1,4 @@
-package companies.wipro;
+package companies;
 
 import java.util.HashMap;
 import java.util.Stack;
