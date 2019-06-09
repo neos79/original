@@ -101,9 +101,23 @@ WHERE
 ORDER BY
   product_name;
   
+  --------------------
+  select rownum,cnt,deptno from (
+select count(*)cnt,deptno  from emp group by deptno  order by count(*) desc
+)where rownum = 1;
+  
+  
+update emp set gender=CASE when 'M' then 'F' when 'F' then 'M' end;
+
+UPDATE EMPLOYEE_MASTER SET EMP_CITY = DECODE(EMP_CITY,'M','mALE','F','FEMALE',EMP_CITY); 
+  
   
   
   UPDATE BUSINESS_PRODUCT SET payment_product = (CASE instr(payment_product,'PO01')
         WHEN 0 THEN payment_product||'\nPO01'
    ELSE payment_product END)
 where  BUSINESS_PRODUCT_CODE in ('SALBUS01','VENDBUS01');
+
+
+
+--------------

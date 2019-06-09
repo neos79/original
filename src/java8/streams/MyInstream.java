@@ -47,7 +47,7 @@ public class MyInstream {
 		
 		
 		System.out.println("\n\n-----average of squares----------");
-		Arrays.stream(new int[]{2,4,6,8,10})
+		Arrays.stream(new int[]{2,4})
 			.map(x->x*x)
 			.average().ifPresent(System.out::print);
 		
@@ -55,7 +55,7 @@ public class MyInstream {
 		System.out.println("\n\n-----Stream from List, filter print----------");
 		List<String> people=Arrays.asList("Ab","Ra","mn","DK","RS");
 			people.stream().map(String::toUpperCase)
-			.filter(x->x.startsWith("R"))
+			.filter(x->x.startsWith("R")).sorted()
 			.forEach(System.out::printf);
 			
 			
@@ -71,5 +71,40 @@ public class MyInstream {
 			bands.close();
 	}
 
+}
+
+class Developer{
+	private int id;
+	private String name;
+	private List<String> skillSet;
+	
+	
+	public Developer(int id, String name, List<String> skillSet) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.skillSet = skillSet;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public List<String> getSkillSet() {
+		return skillSet;
+	}
+	public void setSkillSet(List<String> skillSet) {
+		this.skillSet = skillSet;
+	}
+	
+	
+	
 }
 
