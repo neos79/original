@@ -1,0 +1,227 @@
+Thrown when an application tries to load in a class through its string name using:
+
+The forName method in class Class.
+The findSystemClass method in class ClassLoader.
+The loadClass method in class ClassLoader.
+but no definition for the class with the specified name could be found.
+
+
+
+For NoClassDefFoundError:
+
+Thrown if the Java Virtual Machine or a ClassLoader instance tries to load in the definition of a class (as part of a normal method call or as part of creating a new instance using the new expression) and no definition of the class could be found.
+
+The searched-for class definition existed when the currently executing class was compiled, but the definition can no longer be found.
+
+
+
+=======================================================================================================================
+
+Instance method:  methods which require an object of its class to be created before it can be called.
+
+Important Points:
+					Instance method(s) belong to the Object of the class not to the class i.e. they can be called after creating the Object of the class.
+					Every individual Object created from the class has its own copy of the instance method(s) of that class.
+					They can be overridden since they are resolved using dynamic binding at run time.
+					
+
+Over-riding basically supports late binding . Therefore, which method will be called is decided at run time.It is for non-static methods.
+ Hiding is for all other members (static methods , instance members, static members).It is based on the early binding . 
+ More clearly , the method or member to be called or used is decided during compile time.
+ 
+ 
+ 
+ Instance Initialization Blocks run every time a new instance is created.
+ 
+ Initialization blocks are executed whenever the class is initialized and before constructors are invoked.and only when constructor is called
+ 
+ 
+ 
+ Any variable declared within a method is supposed to be local to the method (It gets stored in the method stack in the JVM, which is one per thread), and static variables are common to all objects of a class (obviously a class can be invoked by many threads - each thread can invoke different object of the same class), so why would java allow you to keep many copies of a static variable (at every thread's stack) 
+ when all it needs is one copy to implement the functionality it needs to give for the keyword static.
+ 
+ 
+ ==============================================================
+ int seed=20;
+ Random n=new Random(seed);
+ 
+ A pseudorandom number generator (PRNG), also known as a deterministic random bit generator DRBG, is an algorithm for generating a sequence of numbers that approximates the properties of random numbers. The sequence is not truly random in that it is completely determined by a relatively small set of initial values, called the PRNG's state, which includes a truly random seed.
+
+					
+					
+=======================================
+concurrent Modification
+   List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c", "d"));
+
+    for (Iterator<String> iter = list.iterator(); iter.hasNext(); ) {
+        if (iter.next().equals("b")) {
+            // iter.remove();    // #1
+            // list.remove("b"); // #2
+        }
+    }
+	
+	
+If you uncomment line #1, it will work fine. If you uncomment line #2 (but leave #1 commented) then it will cause the subsequent call to iter.next() to throw ConcurrentModificationException.
+
+The reason is that the iterator is a separate object that has some references to the internal state of the underlying list. If you modify the list while the iterator is in operation, it could cause the iterator to behave badly, e.g. by skipping elements, repeating elements, indexing off the end of the array, etc. It attempts to detect such modifications and so it throws ConcurrentModificationException if it does.
+
+Removing elements through the iterator works and does not cause exceptions, because this updates the underlying list and the iterator's state that refers to the internals of the list, so everything can stay consistent.
+
+However, there is nothing special about iterator.remove() that makes it work in all cases. If there are multiple iterators iterating over the same list, modifications made by one will cause problems for the others. Consider:
+
+    Iterator<String> i1 = list.iterator();
+    Iterator<String> i2 = list.iterator();
+    i1.remove();
+    i2.remove();
+We now have two iterators pointing into the same list. If we modify the list using one of them, it disrupts the operation of the second, so the call to i2.remove() will result in ConcurrentModificationException.
+
+
+
+============================================
+how iterate in hashMap
+
+HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
+
+for(Map.Entry<String, HashMap> entry : selects.entrySet()) {
+    String key = entry.getKey();
+    HashMap value = entry.getValue();
+
+    // do what you have to do here
+    // In your case, another loop.
+}
+-----------
+HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
+for (String key : selects.keySet())
+{
+    HashMap<innerKey, String> boxHolder = selects.get(key);
+    ComboBox cb = new ComboBox();
+    for (InnerKey innerKey : boxHolder.keySet())
+    {
+        cb.items.add(boxHolder.get(innerKey));
+    }
+}
+
+
+
+
+------------------------------
+
+Lambda Expression Java 8
+
+In Java 1.8 (Java 8) this has become lot easier by using forEach method from Aggregate operations(Stream operations) that looks similar to iterators from Iterable Interface.
+
+Just copy paste below statement to your code and rename the HashMap variable from hm to your HashMap variable to print out key-value pair.
+
+
+HashMap<Integer,Integer> hm = new HashMap<Integer, Integer>();
+// Print the key value pair in one line.
+hm.forEach((k,v) -> System.out.println("key: "+k+" value:"+v));
+---------------------------------
+
+for(HashMap<SomeInnerKeyType, String> h : selects.values())
+{
+   ComboBox cb = new ComboBox();
+   for(String s : h.values())
+   {
+      cb.items.add(s);
+   }
+}
+------------------------------------------
+HashMap<T,U> map = new HashMap<T,U>();
+
+Iterator it = map.values().iterator();
+
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+
+----------------------
+
+Map.values():
+
+HashMap<String, HashMap<SomeInnerKeyType, String>> selects =
+    new HashMap<String, HashMap<SomeInnerKeyType, String>>();
+
+...
+
+for(HashMap<SomeInnerKeyType, String> h : selects.values())
+{
+   ComboBox cb = new ComboBox();
+   for(String s : h.values())
+   {
+      cb.items.add(s);
+   }
+}
+-----------------------------------
+
+HashMap<T,U> map = new HashMap<T,U>();
+
+...
+
+Iterator it = map.values().iterator();
+
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+================================================================
+
+Using iterator and Map.Entry
+
+long i = 0;
+Iterator<Map.Entry<Integer, Integer>> it = map.entrySet().iterator();
+while (it.hasNext()) {
+    Map.Entry<Integer, Integer> pair = it.next();
+    i += pair.getKey() + pair.getValue();
+}
+Using foreach and Map.Entry
+
+long i = 0;
+for (Map.Entry<Integer, Integer> pair : map.entrySet()) {
+    i += pair.getKey() + pair.getValue();
+}
+Using forEach from Java 8
+
+final long[] i = {0};
+map.forEach((k, v) -> i[0] += k + v);
+Using keySet and foreach
+
+long i = 0;
+for (Integer key : map.keySet()) {
+    i += key + map.get(key);
+}
+Using keySet and iterator
+
+long i = 0;
+Iterator<Integer> itr2 = map.keySet().iterator();
+while (itr2.hasNext()) {
+    Integer key = itr2.next();
+    i += key + map.get(key);
+}
+Using for and Map.Entry
+
+long i = 0;
+for (Iterator<Map.Entry<Integer, Integer>> entries = map.entrySet().iterator(); entries.hasNext(); ) {
+    Map.Entry<Integer, Integer> entry = entries.next();
+    i += entry.getKey() + entry.getValue();
+}
+Using the Java 8 Stream API
+
+final long[] i = {0};
+map.entrySet().stream().forEach(e -> i[0] += e.getKey() + e.getValue());
+Using the Java 8 Stream API parallel
+
+final long[] i = {0};
+map.entrySet().stream().parallel().forEach(e -> i[0] += e.getKey() + e.getValue());
+Using IterableMap of Apache Collections
+
+long i = 0;
+MapIterator<Integer, Integer> it = iterableMap.mapIterator();
+while (it.hasNext()) {
+    i += it.next() + it.getValue();
+}
+Using MutableMap of Eclipse (CS) collections
+
+final long[] i = {0};
+mutableMap.forEachKeyValue((key, value) -> {
+    i[0] += key + value;
+});

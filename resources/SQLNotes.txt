@@ -1,0 +1,14 @@
+SQL
+
+select * from (select job, length(job) from emp order by (Length(job))) where rownum=1;
+
+
+select count(*) as count,dept.DNAME select count(*) as count,dept.DNAME from emp inner join dept on emp.DEPTNO = dept.DEPTNO group by dept.DNAME;
+
+select count(*) No_Of_Emp,dept.dname from emp inner join dept on emp.DEPTNO = dept.DEPTNO group by dept.DNAME order by No_Of_Emp desc;
+
+
+
+
+
+

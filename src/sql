@@ -110,8 +110,19 @@ select count(*)cnt,deptno  from emp group by deptno  order by count(*) desc
 update emp set gender=CASE when 'M' then 'F' when 'F' then 'M' end;
 
 UPDATE EMPLOYEE_MASTER SET EMP_CITY = DECODE(EMP_CITY,'M','mALE','F','FEMALE',EMP_CITY); 
-  
-  
+  SELECT deptno FROM (
+        SELECT
+            deptno
+        FROM
+            emptemp
+        GROUP BY
+            deptno
+        ORDER BY
+            COUNT(deptno) DESC
+    )
+WHERE
+    ROWNUM = 1;
+
   
   UPDATE BUSINESS_PRODUCT SET payment_product = (CASE instr(payment_product,'PO01')
         WHEN 0 THEN payment_product||'\nPO01'

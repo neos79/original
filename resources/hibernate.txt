@@ -1,0 +1,100 @@
+Hibernate 5.2 and later versions require at least Java 1.8 and JDBC 4.2.
+
+Hibernate 5.1 and older versions require at least Java 1.6 and JDBC 4.0.
+
+
+When building Hibernate 5.1 or older from sources, you need Java 1.7 due to a bug in the JDK 1.6 compiler.
+
+architecture-
+			_______________________
+			|	data access layer	|
+			------------------------
+			  |                  |
+			  |                  |
+		  Java persitence     hibernate native
+			 API				 API
+			___________________________			
+					HIBERNATE			
+			___________________________	
+						|
+					  JDBC
+						|
+			____________________________		
+						RDBM
+			___________________________
+			
+			
+			
+			
+hibernate 3.1 mandatory jars
+hi		bernate 3.1
+antlr
+commons-collections
+dom4j
+javaassit
+jta
+slf4j
+hibernate-jpa-2.0-api-final
+
+
+
+SessionFactory sessionFactory=new Configuration().configure.buildSessionFactory();
+Session session=sessionFactory.openSession();
+session.beginTransaction();
+session.save(user);
+
+
+if you have transient or static property in class hibernate will not save it automatcally
+
+@Lob for large object	1)clob
+						2)blob
+						
+						
+@Id @Generated(strategy=GENERATEDTYPE.AUTO)    here strategy can be auto/sequence/identity/table
+
+
+@Embedded
+private Address address;
+
+@Embeddable
+class Address{
+}
+
+@Embedded
+@AttributeOverride(name="street, column=@Column(name='HOME_STREET')
+private Address address;
+
+
+@EmbeddedID
+
+@ElementCollection
+private Set<Address> listOfAddresses=new Hashset<>();
+
+
+@JoinTable(Name="USER_ADDRESS",joinColumns=@JoinColumn(name="USER_ID"))
+
+private Collection<Address> listOfAddresses=new ArrayList<Address>();
+
+
+The loaded entity can be removed from session using evict() method. The next loading of this entity will again make a database 
+call if it has been removed using evict() method.
+The whole session cache can be removed using clear() method. It will remove all the entities stored in cache.
+
+Removing cache objects from first level cache example
+Though we can not disable the first level cache in hibernate, but we can certainly remove some of objects from it when needed.
+This is done using two methods :
+
+evict()
+clear()
+Here evict() is used to remove a particular object from cache associated with session, and clear() method is used to remove all cached 
+objects associated with session.So they are essentially like remove one and remove all.
+
+
+
+
+
+
+
+
+
+					  
